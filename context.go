@@ -91,6 +91,8 @@ func (c *timerCtx) Deadline() (deadline time.Time, ok bool) { return c.deadline,
 
 func (c *timerCtx) Err() error {
 	if c.err != nil {
+		c.Lock()
+		defer c.Unlock()
 		return c.err
 	} else {
 		// parent may be canceled
